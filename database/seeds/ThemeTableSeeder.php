@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ThemeSeeder extends Seeder
+class ThemeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -34,6 +34,3 @@ class ThemeSeeder extends Seeder
         ]);
     }
 }
-
-
-01977394921

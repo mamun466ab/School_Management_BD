@@ -160,10 +160,12 @@ class SuperAdminController extends Controller
 
     public function class_routine()
     {
-        $days = DB::table('days')->get();
+        $days = DB::table('days')
+                ->orderby('id', 'asc')
+                ->get();
         $index_content = view('admin.class_routine')
         ->with('Days', $days);
-        
+
         return view('admin.index')
         ->with('page_content', $index_content);
     }
