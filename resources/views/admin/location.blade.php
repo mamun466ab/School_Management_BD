@@ -77,9 +77,10 @@
                         <li><a href="#tabsleft-tab4" data-toggle="tab"><span class="strong">Create Country</span></a></li>
                     </ul>
                     <div class="tab-content">
+                        <div class="alert alert-success print-success-msg text-center" style="display: none;"></div>
                         <div class="tab-pane" id="tabsleft-tab1">
                             <h3>Create a Thana</h3>
-                            <form id="scl_form" action="{{ url('/thana-create') }}" method="post">
+                            <form action="{{ URL::to('/thana-create') }}" method="post" id="wbd_form">
                                 {{ csrf_field() }}
 
                                 <div class="control-group">
@@ -107,7 +108,7 @@
                                         <?php
 //                                        $divisions = DB::table('division')->get();
                                         ?>
-                                        <select name="division_id" id="create_thana_division_id" onchange="ajaxGET('create_thana_dist_id','{{URL::to('/district/')}}/'+this.value)">
+                                        <select name="create_thana_division_id" id="create_thana_division_id" onchange="ajaxGET('create_thana_dist_id','{{URL::to('/district/')}}/'+this.value)">
                                             <option value="">Select Country First</option>
                                         </select>
                                     </div>
@@ -115,20 +116,20 @@
                                 <div class="control-group">
                                     <label class="control-label">Select District</label>
                                     <div class="controls">
-                                        <select name="district_id" id="create_thana_dist_id">
-                                            <option value="1">Dhaka District</option>
+                                        <select name="create_thana_dist_id" id="create_thana_dist_id">
+                                            <option value="">Select Division First</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Enter Thana</label>
+                                    <label class="control-label">Enter Police Station (Thana)</label>
                                     <div class="controls">
-                                        <input type="text" name="thana_name" id="thana_name" placeholder="Enter Thana Name" class="span6" required="required">
+                                        <input type="text" name="thana" id="thana" placeholder="Enter Police Station Name" class="span6">
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="submit" class="btn btn-primary">
+                                        <input type="submit" class="btn btn-primary" value="Add Police Station">
                                     </div>
                                 </div>
                             </form>

@@ -5,66 +5,62 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
+use Validator;
 use DB;
 use Session;
+
 session_start();
 
-class SuperAdminController extends Controller
-{
-    public function __construct(){
+class SuperAdminController extends Controller {
+
+    public function __construct() {
         $superAdminId = Session::get('superAdminId');
     }
 
-
-    public function index()
-    {
+    public function index() {
         $superAdminId = Session::get('superAdminId');
-        if($superAdminId != Null){
+        if ($superAdminId != Null) {
             return Redirect::to('/super-dashboard/')->send();
         }
         return view('admin.login');
     }
 
-    public function super_dashboard()
-    {
+    public function super_dashboard() {
         $superAdminId = Session::get('superAdminId');
-        if($superAdminId == Null){
+        if ($superAdminId == Null) {
             return Redirect::to('/super/')->send();
         }
         $superAdmin = DB::table('super_admin')->get();
-        
+
         $index_content = view('admin.index_page_content');
         return view('admin.index')->with('page_content', $index_content);
     }
 
-    public function superAdminLogin(Request $request)
-    {
+    public function superAdminLogin(Request $request) {
         $username = $request->username;
         $password = md5($request->password);
 
         $superAdminQuery = DB::table('super_admin')
-                        ->where('username', $username)
-                        ->where('password', $password)
-                        ->first();
-        if($superAdminQuery){
+                ->where('username', $username)
+                ->where('password', $password)
+                ->first();
+        if ($superAdminQuery) {
             Session::put('SuperAdminName', $superAdminQuery->name);
             Session::put('superAdminId', $superAdminQuery->id);
 
             return Redirect::to('/super-dashboard/');
-        }else{
+        } else {
             Session::put('exception', 'User email and password not match!!');
             return Redirect::to('/super/');
         }
     }
 
-
-    public function location()
-    {
+    public function location() {
         $index_content = view('admin.location');
         return view('admin.index')->with('page_content', $index_content);
     }
-    
-    public function division($id){
+
+    public function division($id) {
         $country_id = $id;
         $division = DB::table('division')->where('country_id', $country_id)->get();
         echo '<option value="">Select Country</option>';
@@ -72,121 +68,128 @@ class SuperAdminController extends Controller
             echo '<option value="' . $dvn->id . '">' . $dvn->division_name . '</option>';
         endforeach;
     }
-    
-    public function district($id){
+
+    public function district($id) {
         $divesion_id = $id;
         $district = DB::table('district')->where('division_id', $divesion_id)->get();
         echo '<option value="">Select District</option>';
         foreach ($district as $dist):
-            echo '<option value="' . $dist->id . '">'.$dist->district_name . '</option>';
+            echo '<option value="' . $dist->id . '">' . $dist->district_name . '</option>';
         endforeach;
     }
 
-    public function country_create(Request $request)
-    {
+    public function country_create(Request $request) {
         $country = $request->country;
 
 
         $create_country = DB::table('country')->insert([
-                    'country_name' => $country
-                ]);
-        if($create_country){
+            'country_name' => $country
+        ]);
+        if ($create_country) {
             Session::put('message', 'Country added successfully');
             return Redirect::to('/location');
-        }else{
+        } else {
             Session::put('message', 'Country not added!');
         }
     }
 
-    public function division_create(Request $request){
+    public function division_create(Request $request) {
         $division_name = $request->division_name;
         $country_id = $request->country_id;
 
 
         $create = DB::table('division')->insert([
-                    'division_name' => $division_name,
-                    'country_id' => $country_id,
-                ]);
-        if($create){
+            'division_name' => $division_name,
+            'country_id' => $country_id,
+        ]);
+        if ($create) {
             Session::put('message', 'Division added successfully');
             return Redirect::to('/location');
-        }else{
+        } else {
             Session::put('message', 'Division not added!');
         }
     }
 
-    public function district_create(Request $request){
+    public function district_create(Request $request) {
         $district_name = $request->district_name;
         $division_id = $request->division_id;
 
 
         $create = DB::table('district')->insert([
-                    'district_name' => $district_name,
-                    'division_id' => $division_id,
-                ]);
-        if($create){
+            'district_name' => $district_name,
+            'division_id' => $division_id,
+        ]);
+        if ($create) {
             Session::put('message', 'District added successfully');
             return Redirect::to('/location');
-        }else{
+        } else {
             Session::put('message', 'District not added!');
         }
     }
 
-    public function selectAjax(Request $request){
-        if($request->ajax()){
-            $states = DB::table('district')->where('division_id',$request->division_id)->all();
-            $data = view('ajax-select',compact('states'))->render();
-            return response()->json(['options'=>$data]);
+    public function selectAjax(Request $request) {
+        if ($request->ajax()) {
+            $states = DB::table('district')->where('division_id', $request->division_id)->all();
+            $data = view('ajax-select', compact('states'))->render();
+            return response()->json(['options' => $data]);
         }
     }
 
-    public function thana_create(Request $request){
-         
-        $validator = Validator::make($request->all(), [
-            'thana_name' => 'unique:thana,thana_name',
-        ],[            
-            'thana_name.unique' => 'This name already exists.',
+    public function thana_create(Request $request) {
+
+        $crt_thana_validator = Validator::make($request->all(), [
+                    'country_id' => 'required',
+                    'create_thana_division_id' => 'required',
+                    'create_thana_dist_id' => 'required',
+                    'thana' => 'required|unique:thana,thana_name',
+                        ], [
+                    'country_id.required' => 'You can\'t leave this empty.',
+                    'create_thana_division_id.required' => 'You can\'t leave this empty.',
+                    'create_thana_dist_id.required' => 'You can\'t leave this empty.',
+                    'thana.required' => 'You can\'t leave this empty.',
+                    'thana.unique' => 'This police station already added.',
         ]);
-        
-        if($validator->passes()){
-            return response()->json(['success' => '!!! This name successfully added. !!!']);
-        }else{            
-            return response()->json(['errors' => $validator->errors()]);
-        }
 
-            $thana_name = $request->thana_name;
-            $district_id = $request->district_id;
+        if ($crt_thana_validator->passes()):
+            $thanaInfo = array();
+            $thanaInfo['thana_name'] = $request->thana;
+            $thanaInfo['district_id'] = $request->create_thana_dist_id;
+            
+            DB::table('thana')->insert($thanaInfo);
+            
+            return response()->json(['success' => '!!! Pulice Station successfully added. !!!']);
+        else:
+            return response()->json(['errors' => $crt_thana_validator->errors()]);
+        endif;
 
 
 
-            $create = DB::table('thana')->insert([
-                        'thana_name' => $thana_name,
-                        'district_id' => $district_id,
-                    ]);
-            if($create){
-                Session::put('message', 'Thana added successfully');
-                return Redirect::to('/location');
-            }else{
-                Session::put('message', 'Thana not added!');
-            }
+//        $thana_name = $request->thana_name;
+//        $thana_id = $request->thana_id;
+//
+//
+//        $create = DB::table('thana')->insert([
+//                    'thana_name' => $thana_name,
+//                    'thana_id' => $thana_id,
+//                ]);
+//        if($create){
+//            Session::put('message', 'Thana added successfully');
+//            return Redirect::to('/location');
+//        }else{
+//            Session::put('message', 'Thana not added!');
+//        }
     }
 
-
-    public function class_routine()
-    {
-        $days = DB::table('days')
-                ->orderby('id', 'asc')
-                ->get();
+    public function class_routine() {
+        $days = DB::table('days')->get();
         $index_content = view('admin.class_routine')
-        ->with('Days', $days);
+                ->with('Days', $days);
 
         return view('admin.index')
-        ->with('page_content', $index_content);
+                        ->with('page_content', $index_content);
     }
 
-
-    public function logoutSuper()
-    {
+    public function logoutSuper() {
         Session::put('SuperAdminName', null);
         Session::put('superAdminId', null);
         Session::put('message', 'You are successfully logout');
@@ -198,8 +201,7 @@ class SuperAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -209,8 +211,7 @@ class SuperAdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -220,8 +221,7 @@ class SuperAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -231,8 +231,7 @@ class SuperAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -243,8 +242,7 @@ class SuperAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -254,8 +252,8 @@ class SuperAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }

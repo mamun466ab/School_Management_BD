@@ -534,20 +534,16 @@
        $(function () {
            $(" input[type=radio], input[type=checkbox]").uniform();
        });
-
-
-
    </script> 
-
-<!--Ajax Setup-->
-        <script>
+   
+   <script type="text/javascript">
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            $('#scl_form').on('submit change', function (e) {
+            $('#wbd_form').on('submit', function (e) {
                 e.preventDefault();
                 data = $(this).serialize();
                 url = $(this).attr('action');
@@ -560,9 +556,9 @@
                         console.log(data);
                         if ($.isEmptyObject(data.errors)) {
                             console.log(data.success);
-                            $('#scl_form')[0].reset();
+                            $('#wbd_form')[0].reset();
                             $('.text-danger').remove();
-                            $('.form-group').removeClass('has-error').removeClass('has-success');
+//                            $('.control-group').removeClass('has-error').removeClass('has-success');
                             $('.print-success-msg').html(data.success);
                             $('.print-success-msg').css('display', 'block');
                         } else {
@@ -573,13 +569,13 @@
             });
 
             function printMessageErrors(msg) {
-                $('.form-group').removeClass('has-error').find('.text-danger').remove();
+                $('.text-danger').remove();
                 $.each(msg, function (key, value) {
                     var element = $('#' + key);
-                    element.closest('div.form-group')
+                    element.closest('div.control-group')
                             .addClass(value.length > 0 ? 'has-error' : 'has-success');
                     $('.control-label').css('color', '#000');
-                    element.after('<span class="text-danger"><span class="glyphicon glyphicon-exclamation-sign text-danger"></span> ' + value + '</span>');
+                    element.after('<span class="text-danger" style="color:red;"><span class="glyphicon glyphicon-exclamation-sign text-danger"></span> ' + value + '</span>');
                 });
             }
         </script>

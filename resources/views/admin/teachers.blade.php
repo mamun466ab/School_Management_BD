@@ -10,8 +10,8 @@
                         <span class="settings">
                             <span class="text">Theme Color:</span>
                             <span class="colors">
-                                <span class="color-green" data-style="green"></span>
                                 <span class="color-default" data-style="default"></span>
+                                <span class="color-green" data-style="green"></span>
                                 <span class="color-gray" data-style="gray"></span>
                                 <span class="color-purple" data-style="purple"></span>
                                 <span class="color-red" data-style="red"></span>
@@ -70,17 +70,17 @@
                                         <th>Teacher's Name</th>
                                         <th>Subject Name</th>
                                         <th>Rank</th>
-                                        <th>Apointment</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach ($Days as $day)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Salam</td>
-                                        <td>Bangla</td>
-                                        <td>Asistant Teacher</td>
-                                        <td>Class Teacher-IX</td>
+                                        <td>{{ $day->day }}</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>Class Teacher</td>
                                     </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

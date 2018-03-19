@@ -15,7 +15,7 @@ class CreateThanaTable extends Migration
     {
         Schema::create('thana', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('thana_name')->unique();
+            $table->string('thana_name');
             $table->integer('district_id');
         });
     }

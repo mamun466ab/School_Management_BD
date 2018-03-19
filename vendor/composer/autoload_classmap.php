@@ -3220,7 +3220,6 @@ return array(
     'TheSeer\\Tokenizer\\Tokenizer' => $vendorDir . '/theseer/tokenizer/src/Tokenizer.php',
     'TheSeer\\Tokenizer\\XMLSerializer' => $vendorDir . '/theseer/tokenizer/src/XMLSerializer.php',
     'ThemeSeeder' => $baseDir . '/database/seeds/ThemeSeeder.php',
-    'ThemeTableSeeder' => $baseDir . '/database/seeds/ThemeTableSeeder.php',
     'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => $vendorDir . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',
     'TijsVerkoyen\\CssToInlineStyles\\Css\\Processor' => $vendorDir . '/tijsverkoyen/css-to-inline-styles/src/Css/Processor.php',
     'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Processor' => $vendorDir . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Processor.php',

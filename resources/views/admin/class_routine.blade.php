@@ -75,43 +75,7 @@
                                     <tbody>
                                     @foreach ($Days as $day)
                                     <tr>
-                                        <td rowspan=8>{{ $day->day }}</td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" style="text-align: center; background: #ffefa0;">Tifin: 1:30PM to 2:15PM</td>
-                                    </tr>
-                                    <tr>
-                                        
+                                        <td>{{ $day->day }}</td>
                                         <td>Mark</td>
                                         <td>Otto</td>
                                         <td>@mdo</td>
