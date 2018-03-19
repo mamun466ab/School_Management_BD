@@ -9,6 +9,7 @@
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
    <meta content="Ruhul" name="author" />
+   <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
    <link href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
