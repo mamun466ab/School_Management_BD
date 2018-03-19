@@ -63,7 +63,24 @@ class SuperAdminController extends Controller
         $index_content = view('admin.location');
         return view('admin.index')->with('page_content', $index_content);
     }
-
+    
+    public function division($id){
+        $country_id = $id;
+        $division = DB::table('division')->where('country_id', $country_id)->get();
+        echo '<option value="">Select Country</option>';
+        foreach ($division as $dvn):
+            echo '<option value="' . $dvn->id . '">' . $dvn->division_name . '</option>';
+        endforeach;
+    }
+    
+    public function district($id){
+        $divesion_id = $id;
+        $district = DB::table('district')->where('division_id', $divesion_id)->get();
+        echo '<option value="">Select District</option>';
+        foreach ($district as $dist):
+            echo '<option value="' . $dist->id . '">'.$dist->district_name . '</option>';
+        endforeach;
+    }
 
     public function country_create(Request $request)
     {

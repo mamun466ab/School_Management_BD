@@ -63,3 +63,9 @@ Route::get('/user_reg', 'HomeController@user_reg')->name('home');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/log', 'HomeController@log');
+
+//for create location
+Route::get('/division/{id}', 'SuperAdminController@division');
+Route::get('/district/{id}', 'SuperAdminController@district');
+
+
