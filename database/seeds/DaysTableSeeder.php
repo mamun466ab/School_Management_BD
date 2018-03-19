@@ -18,7 +18,6 @@ class DaysTableSeeder extends Seeder
             array('day' => 'Tuesday'),
             array('day' => 'Wednessday'),
             array('day' => 'Thursday'),
-            array('day' => 'Friday'),
         ]);
     }
 }
