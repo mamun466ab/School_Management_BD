@@ -47,6 +47,8 @@ class SchoolController extends Controller
         $days = DB::table('days')->get();
         $index_content = view('admin.teachers')
         ->with('Days', $days);
+
+        $theme_color = DB::table('theme')->get();
         
         return view('admin.index')
         ->with('page_content', $index_content);

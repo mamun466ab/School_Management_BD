@@ -15,13 +15,14 @@ class CreateSchoolsRegTable extends Migration
     {
         Schema::create('schools_reg', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('schools_name');
-            $table->string('schools_code');
-            $table->string('schools_establish_date');
-            $table->string('schools_adress');
-            $table->string('schools_password');
-            $table->string('schools_email');
-            $table->string('schools_phone');
+            $table->string('name');
+            $table->string('code');
+            $table->string('establish_date');
+            $table->string('adress');
+            $table->string('password');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('expire_date');
             $table->timestamps();
         });
     }
