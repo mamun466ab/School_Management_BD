@@ -79,7 +79,7 @@
                     <div class="tab-content">
                         <div class="tab-pane" id="tabsleft-tab1">
                             <h3>Create a Thana</h3>
-                            <form action="{{ url('/thana-create') }}" method="post">
+                            <form id="scl_form" action="{{ url('/thana-create') }}" method="post">
                                 {{ csrf_field() }}
 
                                 <div class="control-group">
@@ -115,7 +115,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Select District</label>
                                     <div class="controls">
-                                        <select name="division_id" id="create_thana_dist_id">
+                                        <select name="district_id" id="create_thana_dist_id">
                                             <option value="1">Dhaka District</option>
                                         </select>
                                     </div>
@@ -123,7 +123,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Enter Thana</label>
                                     <div class="controls">
-                                        <input type="text" placeholder="Enter Thana Name" class="span6" required="required">
+                                        <input type="text" name="thana_name" id="thana_name" placeholder="Enter Thana Name" class="span6" required="required">
                                     </div>
                                 </div>
                                 <div class="control-group">

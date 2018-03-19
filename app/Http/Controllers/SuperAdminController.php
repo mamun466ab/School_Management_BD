@@ -141,20 +141,34 @@ class SuperAdminController extends Controller
     }
 
     public function thana_create(Request $request){
-        $thana_name = $request->thana_name;
-        $thana_id = $request->thana_id;
-
-
-        $create = DB::table('thana')->insert([
-                    'thana_name' => $thana_name,
-                    'thana_id' => $thana_id,
-                ]);
-        if($create){
-            Session::put('message', 'Thana added successfully');
-            return Redirect::to('/location');
-        }else{
-            Session::put('message', 'Thana not added!');
+         
+        $validator = Validator::make($request->all(), [
+            'thana_name' => 'unique:thana,thana_name',
+        ],[            
+            'thana_name.unique' => 'This name already exists.',
+        ]);
+        
+        if($validator->passes()){
+            return response()->json(['success' => '!!! This name successfully added. !!!']);
+        }else{            
+            return response()->json(['errors' => $validator->errors()]);
         }
+
+            $thana_name = $request->thana_name;
+            $district_id = $request->district_id;
+
+
+
+            $create = DB::table('thana')->insert([
+                        'thana_name' => $thana_name,
+                        'district_id' => $district_id,
+                    ]);
+            if($create){
+                Session::put('message', 'Thana added successfully');
+                return Redirect::to('/location');
+            }else{
+                Session::put('message', 'Thana not added!');
+            }
     }
 
 
